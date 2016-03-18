@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN" debug="OFF">
+    <properties>
+        <property name="LOG_HOME">//Users/moetakara/Documents/log</property>
+        <Property name="LOG_PATTERN">%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n</Property>
+        <property name="BACKUP_HOME">{LOG_HOME}/backup</property>
+    </properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+             <Filters>
+                <ThresholdFilter level="DEBUG"/>
+            </Filters>
+        </Console>
+         
+        <RollingFile name="debugLogs"
+            fileName="${LOG_HOME}/logs/debugs.log" filePattern="${LOG_HOME}/logs/debugs.log.%i">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <Filters>
+                <ThresholdFilter level="DEBUG"/>
+                <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="4 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+         
+        <RollingFile name="errorLogs" fileName="${LOG_HOME}/logs/errors.log"
+                     filePattern="${LOG_HOME}/logs/errors.log.%i">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Filters>
+                <ThresholdFilter level="WARN"/>
+            </Filters>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="4 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+ 
+        <RollingFile name="allLogs" fileName="${LOG_HOME}/logs/api.log"
+                     filePattern="${LOG_HOME}/logs/api.log-%d{MM-dd-yyyy}">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+         
+         
+    </appenders>
+    <loggers>
+        <!-- Root Logger -->
+        <root level="INFO">
+            <appender-ref ref="Console" />
+            <appender-ref ref="debugLogs" />
+            <appender-ref ref="allLogs" />
+            <appender-ref ref="errorLogs" />
+        </root>
+         
+        <!-- 3rdparty Loggers -->
+        <logger name="org.springframework.core" level="error"></logger>
+        <logger name="org.springframework.beans" level="error"></logger>
+        <logger name="org.springframework.context" level="error"></logger>
+        <logger name="org.springframework.web" level="error"></logger>
+    </loggers>
+</configuration>

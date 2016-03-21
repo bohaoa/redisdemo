@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+			http://www.springframework.org/schema/context
+		    http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+    <!--使用默认构造参数-->
+    <bean name="bean1" class="demo.ioc.HelloImpl2"/>
+
+    <!--使用有参数构造参数-->
+    <bean name="bean2" class="demo.ioc.HelloImpl2">
+        <!-- 指定构造器参数 -->
+        <constructor-arg index="0" value="Hello Spring!"/>
+    </bean>
+    <!-- 使用静态工厂方法 -->
+    <bean id="bean3" class="demo.ioc.HelloApiStaticFactory" factory-method="newInstance">
+        <constructor-arg index="0" value="Hello Spring static!"/>
+    </bean>
+    <!-- 使用实例工厂方法 -->
+    <bean id="beanInstanceFactory" class="demo.ioc.HelloApiInstanceFactory"/>
+    <bean id="bean4" factory-bean="beanInstanceFactory" factory-method="newInstance">
+        <constructor-arg index="0" value="Hello Spring!"></constructor-arg>
+    </bean>
+
+    
+</beans>

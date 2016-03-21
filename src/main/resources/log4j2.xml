@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="WARN" debug="OFF">
     <properties>
-        <property name="LOG_HOME">/Users/moetakara</property>
+        <property name="LOG_HOME">/temp</property>
         <Property name="LOG_PATTERN">%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n</Property>
         <property name="BACKUP_HOME">{LOG_HOME}/backup</property>
     </properties>

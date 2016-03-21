@@ -2,6 +2,10 @@ package cn.javass.spring.chapter6.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 
+/**
+ * 切面
+ * @author wangmin
+ */
 public class HelloWorldAspect {
         
     //前置通知

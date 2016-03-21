@@ -7,17 +7,27 @@
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
-           
-    <bean id="helloWorldService" class="cn.javass.spring.chapter6.service.impl.HelloWorldService"/>
-
-    <bean id="aspect" class="cn.javass.spring.chapter6.aop.HelloWorldAspect"/>
+    <!-- 目标对象 -->
+<!--     <bean id="helloWorldService" class="cn.javass.spring.chapter6.service.impl.HelloWorldService"/> -->
+<!--     切面 -->
+<!--     <bean id="aspect" class="cn.javass.spring.chapter6.aop.HelloWorldAspect"/> -->
+<!--     <aop:config> -->
+<!--         <aop:pointcut id="pointcut" expression="execution(* cn.javass..*.*(..))"/>切入点（连接点的集合） -->
+<!--         <aop:aspect ref="aspect"> -->
+<!--              <aop:before pointcut-ref="pointcut" method="beforeAdvice"/>通知 -->
+<!--              <aop:after pointcut="execution(* cn.javass..*.*(..))" method="afterFinallyAdvice"/> -->
+<!--         </aop:aspect> -->
+<!--     </aop:config> -->
+    
+    
+    <bean id="helloWorldService" class="cn.javass.spring.chapter6.service.impl.HelloWorldService"></bean>
+    <bean id="aspect" class="cn.javass.spring.chapter6.aop.HelloWorldAspect"></bean>
     <aop:config>
-        <aop:pointcut id="pointcut" expression="execution(* cn.javass..*.*(..))"/>
-        <aop:aspect ref="aspect">
-             <aop:before pointcut-ref="pointcut" method="beforeAdvice"/>
-             <aop:after pointcut="execution(* cn.javass..*.*(..))" method="afterFinallyAdvice"/>
-        </aop:aspect>
+    	<aop:pointcut expression="execution(* cn.javass..*.*(..))" id="pointcut"/>
+    	<aop:aspect ref="aspect">
+    		<aop:before method="beforeAdvice" pointcut-ref="pointcut"/>
+    	</aop:aspect>
     </aop:config>
-        
+    
    
 </beans>

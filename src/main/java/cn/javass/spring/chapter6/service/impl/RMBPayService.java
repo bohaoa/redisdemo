@@ -6,6 +6,7 @@ public class RMBPayService implements IPayService {
     
     @Override
     public boolean pay(long userId, long money) {
+    	System.out.println("2222222");
       //业务实现
         return true;
     }

@@ -56,7 +56,7 @@ public class HelloWorldAspect2 {
     
     @Around(value="this(cn.javass.spring.chapter6.service.IIntroductionService+)")
     public Object thisPointcut(ProceedingJoinPoint pjp) throws Throwable {
-        System.out.println("===========around sssss advice");
+        System.out.println("===========around sssss advice123");
         Object retVal = pjp.proceed();
         System.out.println("===========around ssss advice");
         return retVal;

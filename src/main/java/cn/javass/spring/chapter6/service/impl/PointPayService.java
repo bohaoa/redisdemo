@@ -6,6 +6,7 @@ public class PointPayService implements IPayService {
     
     @Override
     public boolean pay(long userId, long money) {
+    	System.out.println("111111111");
         //支付业务实现
         return true;
     }

@@ -146,8 +146,10 @@ public class AopTest {
 
     @Test
     public void testSchema() {
+    	System.out.println("======================================");
         ApplicationContext ctx = new ClassPathXmlApplicationContext("chapter6/schemeAop.xml");
         IPayService payService = ctx.getBean("pointPayService", IPayService.class);
         payService.pay(1, 1);
+        System.out.println("======================================");
     }
 }

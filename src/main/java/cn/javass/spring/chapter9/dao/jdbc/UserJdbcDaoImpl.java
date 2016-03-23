@@ -25,7 +25,7 @@ public class UserJdbcDaoImpl extends NamedParameterJdbcDaoSupport implements IUs
 
     @Override
     public int countAll() {
-       return getJdbcTemplate().queryForInt(COUNT_ALL_SQL);
+       return getJdbcTemplate().queryForObject(COUNT_ALL_SQL, Integer.class);
     }
     
 }

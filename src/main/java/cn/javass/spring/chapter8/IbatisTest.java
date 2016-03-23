@@ -12,13 +12,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.ibatis.SqlMapClientCallback;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
 
-import cn.javass.spring.chapter7.UserModel;
-import cn.javass.spring.chapter7.dao.IUserDao;
-import cn.javass.spring.chapter8.dao.IUserDao2;
-
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapExecutor;
 import com.ibatis.sqlmap.client.SqlMapSession;
+
+import cn.javass.spring.chapter7.UserModel;
+import cn.javass.spring.chapter7.dao.IUserDao;
+import cn.javass.spring.chapter8.dao.IUserDao2;
 
 
 public class IbatisTest {
@@ -91,13 +91,13 @@ public class IbatisTest {
         //hsqldb自增时，第一个是0
         Assert.assertEquals(0, model.getId());
         //通过回调允许更复杂操作
-        sqlMapClientTemplate.execute(new SqlMapClientCallback<Void>() {
-            @Override
-            public Void doInSqlMapClient(SqlMapExecutor session) throws SQLException {
-                session.insert("UserSQL.insert", model);
-                return null;
-            }
-        });
+//        sqlMapClientTemplate.execute(new SqlMapClientCallback<Void>() {
+//            @Override
+//            public Void doInSqlMapClient(SqlMapExecutor session) throws SQLException {
+//                session.insert("UserSQL.insert", model);
+//                return null;
+//            }
+//        });
         //hsqldb自增时，第二个自然就是1
         Assert.assertEquals(1, model.getId());
     }
@@ -138,8 +138,8 @@ public class IbatisTest {
         IUserDao2 userDao = ctx.getBean(IUserDao2.class);
         UserModel model = new UserModel();
         model.setMyName("test");
-        userDao.save(model);
-        Assert.assertEquals(1, userDao.countAll());
+        //userDao.save(model);
+        //Assert.assertEquals(1, userDao.countAll());
         
     }
     

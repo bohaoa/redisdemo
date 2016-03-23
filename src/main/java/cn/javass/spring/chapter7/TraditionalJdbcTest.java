@@ -39,7 +39,7 @@ public class TraditionalJdbcTest {
 
     private Connection getConnection() throws SQLException {
         //1.注册JDBC驱动器
-        DriverManager.registerDriver(new org.hsqldb.jdbcDriver());
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         //2.获取数据库连接
         Connection conn = DriverManager.getConnection("jdbc:hsqldb:mem:test", "sa", "");
         //3.关闭自动提交，打开事务

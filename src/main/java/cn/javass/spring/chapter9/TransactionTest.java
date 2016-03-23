@@ -180,7 +180,7 @@ public class TransactionTest {
         transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
 
         jdbcTemplate1.update(CREATE_TABLE_SQL);
-        int originalCount = jdbcTemplate1.queryForInt(COUNT_SQL);
+        int originalCount = jdbcTemplate1.queryForObject(COUNT_SQL, Integer.class);
         try {
             transactionTemplate.execute(new TransactionCallbackWithoutResult() {
                 @Override
@@ -191,7 +191,7 @@ public class TransactionTest {
                 }
             });
         } catch (RuntimeException e) {
-            int count = jdbcTemplate1.queryForInt(COUNT_SQL);
+            int count = jdbcTemplate1.queryForObject(COUNT_SQL, Integer.class);
             Assert.assertEquals(originalCount, count);
         }
         jdbcTemplate1.update(DROP_TABLE_SQL);

@@ -1,7 +1,6 @@
 package cn.javass.spring.chapter8;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,11 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.orm.jpa.JpaTemplate;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import cn.javass.spring.chapter7.UserModel;
 import cn.javass.spring.chapter7.dao.IUserDao;
@@ -78,34 +72,7 @@ public class JPATest {
         }
     }
     
-    @Test
-    public void testJpaTemplate() {
-        final JpaTemplate jpaTemplate = new JpaTemplate(entityManagerFactory);
-        final UserModel2 model = new UserModel2();
-//        final UserModel model2 = new UserModel();
-        model.setMyName("test1");
-//        model2.setMyName("test2");
-        PlatformTransactionManager txManager = ctx.getBean(PlatformTransactionManager.class);
-        TransactionTemplate tansactionTemplate = new TransactionTemplate(txManager);
-        tansactionTemplate.execute(new TransactionCallback<Void>() {
-            @Override
-            public Void doInTransaction(TransactionStatus status) {
-                jpaTemplate.persist(model);
-//                //通过回调允许更复杂操作
-//                jpaTemplate.execute(new JpaCallback<Void>() {
-//                    @Override
-//                    public Void doInJpa(EntityManager em) throws PersistenceException {
-//                        em.persist(model2);
-//                        return null;
-//                    }
-//                });
-                return null;
-            }
-        });
-        String COUNT_ALL = "select count(*) from UserModel";
-        Number count = (Number) jpaTemplate.find(COUNT_ALL).get(0);
-        Assert.assertEquals(1, count.intValue());
-    }
+     
     
     @Test
     public void bestPracticeTest() {
@@ -120,32 +87,6 @@ public class JPATest {
         Assert.assertEquals(1, userDao.countAll());
     }
     
-    
-    @Test
-    public void crudTest() {
-        PlatformTransactionManager txManager = ctx.getBean(PlatformTransactionManager.class);
-        final JpaTemplate jpaTemplate = new JpaTemplate(entityManagerFactory);
-        TransactionTemplate tansactionTemplate = new TransactionTemplate(txManager);
-        tansactionTemplate.execute(new TransactionCallback<Void>() {
-            @Override
-            public Void doInTransaction(TransactionStatus status) {
-                UserModel model = new UserModel();
-                model.setMyName("test");
-                //新增
-                jpaTemplate.persist(model);
-                //修改
-                model.setMyName("test2");
-                jpaTemplate.flush();//可选
-                //查询
-                String sql = "from UserModel where myName=?";
-                List result = jpaTemplate.find(sql, "test2");
-                Assert.assertEquals(1, result.size());
-                //删除
-                jpaTemplate.remove(model);
-                return null;
-            }
-        });
-    }
     
     private void closeEntityManager(EntityManager em) {
         em.close();

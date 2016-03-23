@@ -10,16 +10,12 @@ import javax.sql.DataSource;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
-import junit.framework.Assert;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.atomikos.icatch.jta.UserTransactionImp;
-import com.atomikos.icatch.jta.UserTransactionManager;
-import com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean;
+import junit.framework.Assert;
 
 public class TranditionalTransactionTest {
    
@@ -42,30 +38,7 @@ public class TranditionalTransactionTest {
     }
     
     
-
-    @Test
-    public void testTranditionalJTAAndNotXATransaction() throws Exception {
-        initTransactionManager();
-        Connection conn = null;
-        UserTransaction tx = null;
-        try {
-            tx = getUserTransaction();
-            tx.begin();
-            conn = getDataSource().getConnection();
-            //2.声明SQL
-            String sql = "select * from INFORMATION_SCHEMA.SYSTEM_TABLES";
-            PreparedStatement pstmt = conn.prepareStatement(sql);//2.预编译SQL
-            ResultSet rs = pstmt.executeQuery();//3.执行SQL
-            process(rs);//4.处理结果集
-            closeResultSet(rs);//5.释放结果集
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            throw e;
-        } finally {
-            conn.close();
-        }
-    }
+ 
     
     private void process(ResultSet rs) throws SQLException {
         while(rs.next()) {
@@ -94,26 +67,7 @@ public class TranditionalTransactionTest {
             }
         }
     }
-    
-    private UserTransaction getUserTransaction() {
-        return new UserTransactionImp();
-    }
-    
-    public void initTransactionManager() throws SystemException {
-        UserTransactionManager tm = new UserTransactionManager();
-        tm.setForceShutdown(true);
-        tm.init();
-    }
-    
-    private DataSource getDataSource() {
-        AtomikosNonXADataSourceBean dataSourceBean = new AtomikosNonXADataSourceBean();
-        dataSourceBean.setDriverClassName("org.hsqldb.jdbcDriver");
-        dataSourceBean.setUrl("jdbc:hsqldb:mem:test");
-        dataSourceBean.setUser("sa");
-        dataSourceBean.setPassword("");
-        dataSourceBean.setUniqueResourceName("jdbc/test");
-        return dataSourceBean;
-    }
+     
     
     
     

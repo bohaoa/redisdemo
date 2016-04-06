@@ -15,7 +15,9 @@ public class CallableAndFuture {
 
 	public static void main(String[] args) {
 		new CallableAndFuture().test2();
-		
+	}
+	
+	public void test0(){
 		Callable<Integer> call = new Callable<Integer>(){
 			@Override
 			public Integer call() throws Exception {

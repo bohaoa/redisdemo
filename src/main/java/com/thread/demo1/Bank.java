@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 /**
  * 第一个：使用排它锁
- * 第二个：使用读／写锁
+ * 第二个：使用读／写锁  http://www.cnblogs.com/dolphin0520/p/3932906.html
  * @author moetakara
  *
  */
